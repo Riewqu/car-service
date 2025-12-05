@@ -1,0 +1,11 @@
+Placeholder - ให้คุณสร้างไอคอนจริงทีหลัง
+ดู ICON-INSTRUCTIONS.md สำหรับวิธีสร้าง
+
+สำหรับตอนนี้:
+1. ไปที่ https://www.flaticon.com/free-icon/car-service_4283094
+2. ดาวน์โหลด PNG 512x512
+3. Resize เป็น 192x192 และ 512x512
+4. เปลี่ยนชื่อเป็น icon-192x192.png และ icon-512x512.png
+5. วางใน public/
+
+หรือใช้ Canva สร้างไอคอนสีดำพื้นหลังขาว

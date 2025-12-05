@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm init -y)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(npm run gen:types:*)",
+      "Bash(npx supabase login)",
+      "Bash(npm uninstall:*)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr :3000)",
+      "Bash(powershell:*)",
+      "Bash(dir:*)",
+      "Bash(del \"\\?\\C:\\Users\\ampol\\OneDrive\\Desktop\\carproject1\\nul\")",
+      "Bash(cmd /c:*)",
+      "Bash(rm:*)",
+      "Bash(copy:*)",
+      "Bash(npm run build)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

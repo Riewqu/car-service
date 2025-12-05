@@ -1,0 +1,41 @@
+{
+  "name": "car-service-manager",
+  "version": "1.0.0",
+  "description": "ระบบบริหารจัดการศูนย์บริการรถยนต์ (PWA)",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "gen:types": "npx supabase gen types typescript --project-id rtmfkzdxyfksaiqcevkm > lib/database.types.ts"
+  },
+  "keywords": [
+    "car",
+    "service",
+    "pwa",
+    "nextjs",
+    "supabase"
+  ],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.86.0",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.22",
+    "lucide-react": "^0.555.0",
+    "next": "^16.0.7",
+    "next-pwa": "^5.6.0",
+    "postcss": "^8.5.6",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "tailwindcss": "^3.4.18",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3",
+    "supabase": "^2.65.5"
+  }
+}
