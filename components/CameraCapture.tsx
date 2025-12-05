@@ -16,6 +16,28 @@ export default function CameraCapture({ isOpen, onClose, onCapture }: CameraCapt
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
   const [hasCamera, setHasCamera] = useState(true);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen) {
       startCamera();

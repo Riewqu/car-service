@@ -44,6 +44,28 @@ export default function StockPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tempQuantity, setTempQuantity] = useState(0);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isModalOpen]);
+
   // Movement filters
   const [filterStartDate, setFilterStartDate] = useState('');
   const [filterEndDate, setFilterEndDate] = useState('');
@@ -726,8 +748,8 @@ export default function StockPage() {
 
       {/* Edit Stock Modal */}
       {isModalOpen && editingItem && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl max-w-sm w-full shadow-xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300">
+        <div className="fixed inset-0 bg-white dark:bg-black md:bg-black/50 md:backdrop-blur-sm z-50 md:flex md:items-center md:justify-center md:p-4 animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-zinc-900 md:rounded-2xl max-w-sm w-full h-full md:h-auto shadow-xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 flex flex-col overflow-hidden">
             {/* Header */}
             <div className="p-6 border-b border-gray-200 dark:border-zinc-800">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
@@ -741,7 +763,7 @@ export default function StockPage() {
             </div>
 
             {/* Content */}
-            <div className="p-6 space-y-6">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
               {/* Current Stock Display */}
               <div className="text-center">
                 <div className="text-sm text-gray-600 dark:text-zinc-400 mb-2">สต็อคปัจจุบัน</div>
@@ -833,7 +855,7 @@ export default function StockPage() {
             </div>
 
             {/* Footer */}
-            <div className="p-6 border-t border-gray-200 dark:border-zinc-800 flex gap-3">
+            <div className="p-6 border-t border-gray-200 dark:border-zinc-800 flex gap-3 flex-shrink-0">
               <button
                 onClick={closeModal}
                 className="flex-1 bg-gray-200 dark:bg-zinc-800 hover:bg-gray-300 dark:hover:bg-zinc-700 text-gray-900 dark:text-white px-6 py-3 rounded-xl font-semibold transition-all"

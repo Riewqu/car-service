@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 
 type SelectModalItem = {
@@ -29,6 +29,28 @@ export default function SelectModal({
 }: SelectModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const filteredItems = items.filter((item) =>
@@ -41,9 +63,9 @@ export default function SelectModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center md:p-4">
-      <div className="bg-white dark:bg-zinc-900 md:rounded-2xl max-w-md w-full shadow-xl h-full md:h-auto md:max-h-[80vh] flex flex-col">
-        <div className="sticky top-0 bg-white dark:bg-zinc-900 p-6 border-b border-gray-200 dark:border-zinc-800">
+    <div className="fixed inset-0 bg-white dark:bg-black md:bg-black/50 z-50 md:flex md:items-center md:justify-center md:p-4">
+      <div className="bg-white dark:bg-zinc-900 md:rounded-2xl max-w-md w-full shadow-xl h-full md:h-auto md:max-h-[80vh] flex flex-col overflow-hidden">
+        <div className="sticky top-0 bg-white dark:bg-zinc-900 p-6 border-b border-gray-200 dark:border-zinc-800 z-10">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
           {/* Search */}
           <div className="relative">
@@ -60,7 +82,7 @@ export default function SelectModal({
             />
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 space-y-3">
+        <div className="flex-1 overflow-y-auto p-6 space-y-3 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           {filteredItems.map((item) => {
             const isSelected = selectedIds.includes(item.id);
             return (
@@ -86,7 +108,7 @@ export default function SelectModal({
             </div>
           )}
         </div>
-        <div className="sticky bottom-0 bg-white dark:bg-zinc-900 p-6 border-t border-gray-200 dark:border-zinc-800">
+        <div className="sticky bottom-0 bg-white dark:bg-zinc-900 p-6 border-t border-gray-200 dark:border-zinc-800 z-10">
           <button
             type="button"
             onClick={handleClose}

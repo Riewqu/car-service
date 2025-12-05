@@ -16,6 +16,28 @@ export default function AuditTrail({ serviceRecordId, isOpen, onClose }: AuditTr
   const [loading, setLoading] = useState(false);
   const [expandedEntry, setExpandedEntry] = useState<string | null>(null);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen && serviceRecordId) {
       fetchHistory();
@@ -53,8 +75,8 @@ export default function AuditTrail({ serviceRecordId, isOpen, onClose }: AuditTr
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 bg-white dark:bg-black md:bg-black/50 md:backdrop-blur-sm md:flex md:items-center md:justify-center md:p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-zinc-900 md:rounded-2xl shadow-2xl w-full max-w-3xl h-full md:max-h-[90vh] flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-zinc-800">
           <div className="flex items-center space-x-3">
@@ -82,7 +104,7 @@ export default function AuditTrail({ serviceRecordId, isOpen, onClose }: AuditTr
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-6 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white"></div>

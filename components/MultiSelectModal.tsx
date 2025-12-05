@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { X, Search, Check } from 'lucide-react';
 
 type Item = {
@@ -30,6 +30,28 @@ export default function MultiSelectModal({
   onClearAll,
 }: MultiSelectModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isOpen]);
 
   // Filter and sort items
   const filteredItems = useMemo(() => {
@@ -114,7 +136,7 @@ export default function MultiSelectModal({
       </div>
 
       {/* Content */}
-      <div className="h-[calc(100vh-140px)] overflow-y-auto p-4">
+      <div className="h-[calc(100vh-140px)] overflow-y-auto p-4 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
         {filteredItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
             <Search size={64} className="text-gray-300 dark:text-zinc-700 mb-4" />

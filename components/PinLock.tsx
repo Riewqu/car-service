@@ -55,7 +55,7 @@ export default function PinLock({ onUnlock }: PinLockProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] carbon-fiber overflow-y-auto">
+    <div className="fixed inset-0 z-[100] carbon-fiber overflow-y-auto overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
       <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8">
         <div className="w-full max-w-sm mx-auto py-4">
           {/* Logo */}

@@ -30,6 +30,28 @@ export default function EditServiceModal({
   const [changeReason, setChangeReason] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen && serviceRecord) {
       setLicensePlate(serviceRecord.license_plate);
@@ -91,8 +113,8 @@ export default function EditServiceModal({
   if (!isOpen || !serviceRecord) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 bg-white dark:bg-black md:bg-black/50 md:backdrop-blur-sm md:flex md:items-center md:justify-center md:p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-zinc-900 md:rounded-2xl shadow-2xl w-full max-w-2xl h-full md:max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-zinc-800">
           <div className="flex items-center space-x-3">
@@ -118,7 +140,7 @@ export default function EditServiceModal({
         </div>
 
         {/* Content */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           {/* License Plate */}
           <div>
             <label className="flex items-center space-x-2 text-gray-700 dark:text-zinc-300 mb-2 font-medium">
